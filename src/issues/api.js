@@ -3,6 +3,8 @@
 import useSWR from 'swr'
 import PouchDB from 'pouchdb'
 
+console.log(process.env)
+
 const DATABASE_URL = process.env.DATABASE_URL
 
 const db = new PouchDB(`${DATABASE_URL}/issues`)
