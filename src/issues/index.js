@@ -42,7 +42,7 @@ export const Issues = () => {
 			})
 	}
 	
-	const closeErrorSnackbar = () => {
+	const resetAddIssueForm = () => {
 		setHasError(false);
 		setNewIssueId(DEFAULT_UPC_CODE);
 	}
@@ -60,8 +60,8 @@ export const Issues = () => {
       />
       <button onClick={createNewIssue}>{'Add New'}</button>
 
-			<Snackbar open={hasError} autoHideDuration={6000} onClose={closeErrorSnackbar}>
-        <MuiAlert onClose={closeErrorSnackbar} severity="error">
+			<Snackbar open={hasError} autoHideDuration={6000} onClose={resetAddIssueForm}>
+        <MuiAlert onClose={resetAddIssueForm} severity="error">
           {`Issue ${newIssueId} not found!`}
         </MuiAlert>
       </Snackbar>
