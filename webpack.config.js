@@ -1,8 +1,6 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
 
-console.log(process.env)
-
 module.exports = {
   mode: 'development',
   entry: './src/index.js',
@@ -46,7 +44,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new Dotenv({ safe: true }),
+    new Dotenv({ safe: true, systemvars: true }),
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',
