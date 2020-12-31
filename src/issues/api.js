@@ -22,7 +22,7 @@ export const useIssue = (id) => {
 
 export const useIssuesDB = () => {
   const { data: issues = [], mutate } = useSWR('issues/', () =>
-    db.allDocs({ include_docs: true }).then((result) => result.rows)
+		db.query('queries/by_title', { include_docs: true }).then((result) => result.rows)
   )
 
   return {
