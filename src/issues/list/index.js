@@ -12,6 +12,11 @@ import Typography from '@material-ui/core/Typography'
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
 import ColorLensIcon from '@material-ui/icons/ColorLens';
+import OpacityIcon from '@material-ui/icons/Opacity';
+import GestureIcon from '@material-ui/icons/Gesture';
+import BrushIcon from '@material-ui/icons/Brush';
+import TextFormatIcon from '@material-ui/icons/TextFormat';
+import FormatQuoteIcon from '@material-ui/icons/FormatQuote';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,6 +49,16 @@ const getArtists = (creators) => {
 			return creator;
 		} 
 	});
+};
+
+const ICONS = {
+	writer: <FormatQuoteIcon />,
+	colorist: <ColorLensIcon />,
+	inker: <OpacityIcon />,
+	"penciler (cover)": <GestureIcon />,
+	penciler: <GestureIcon />,
+	letterer: <TextFormatIcon />,
+	artist: <BrushIcon />
 };
 
 const IssueCard = (props) => {
@@ -79,6 +94,7 @@ const IssueCard = (props) => {
 								return (
 									<li key={data.name}>
 										<Chip
+											icon={ICONS[data.role]}
 											label={data.name}
 											className={classes.chip}
 											component="a" 
@@ -98,7 +114,7 @@ const IssueCard = (props) => {
 							return (
 								<li key={data.name}>
 									<Chip
-										icon={<ColorLensIcon />}
+										icon={ICONS[data.role]}
 										label={data.name}
 										className={classes.chip}
 										component="a" 
