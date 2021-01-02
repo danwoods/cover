@@ -9,17 +9,49 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import Chip from '@material-ui/core/Chip';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    //maxWidth: theme.spacing(20),
-  },
+		//maxWidth: theme.spacing(20),
+	},
+	chip: {
+		margin: theme.spacing(0.5),
+	},
+	paper: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    listStyle: 'none',
+    padding: theme.spacing(0.5),
+    margin: 0,
+  }
 }))
 
-const IssueCard = (props) => {
-  const classes = useStyles()
+const getWriters = (creators) => {
+	return creators.filter(creator => {
+		if(creator.role && creator.role === "writer") {
+			return creator;
+		} 
+	});
+};
 
-  const officialInfoUrl = props.urls.find((url) => url.type === 'detail')?.url
+const getArtists = (creators) => {
+	return creators.filter(creator => {
+		if(creator.role && (creator.role === "inker" || creator.role === "colorist" || creator.role === "penciler (cover)" || creator.role === "penciler" || creator.role === "letterer" || creator.role === "artist")) {
+			return creator;
+		} 
+	});
+};
+
+const IssueCard = (props) => {
+	const classes = useStyles()
+
+	const officialInfoUrl = props.urls.find((url) => url.type === 'detail')?.url
+	
+	const writers = getWriters(props.creators.items);
+	const artists = getArtists(props.creators.items);
 
   return (
     <Card className={classes.root}>
@@ -38,6 +70,43 @@ const IssueCard = (props) => {
           <Typography variant="body2" color="textSecondary" component="p">
             {'Some Description'}
           </Typography>
+					<Typography color="textPrimary" component="h3">
+							{'Writers: '}
+						</Typography>
+					<Paper component="ul" className={classes.paper} elevation={0}>
+						{writers.map((data) => {
+								return (
+									<li key={data.name}>
+										<Chip
+											label={data.name}
+											className={classes.chip}
+											component="a" 
+											href={`#${data.name}`} 
+											clickable
+										/>
+									</li>
+								);
+							})}
+					</Paper>
+
+					<Typography color="textPrimary" component="h3">
+						{'Artists: '}
+					</Typography>
+					<Paper component="ul" className={classes.paper} elevation={0}>
+					{artists.map((data) => {
+							return (
+								<li key={data.name}>
+									<Chip
+										label={data.name}
+										className={classes.chip}
+										component="a" 
+										href={`#${data.name}`} 
+										clickable
+									/>
+								</li>
+							);
+						})}
+					</Paper>
         </CardContent>
       </CardActionArea>
       <CardActions>
