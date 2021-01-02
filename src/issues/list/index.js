@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Chip from '@material-ui/core/Chip';
 import Paper from '@material-ui/core/Paper';
+import ColorLensIcon from '@material-ui/icons/ColorLens';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -97,6 +98,7 @@ const IssueCard = (props) => {
 							return (
 								<li key={data.name}>
 									<Chip
+										icon={<ColorLensIcon />}
 										label={data.name}
 										className={classes.chip}
 										component="a" 
