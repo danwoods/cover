@@ -1,0 +1,130 @@
+{
+  "$id": "http://cover.com/issue/schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "A single issue of a comicbook",
+  "properties": {
+    "character_ids": {
+      "description": "IDs of characters featured prominently in issue",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "creativeTeam": {
+      "items": {
+        "properties": {
+          "id": {
+            "description": "Person ID",
+            "type": "string"
+          },
+          "role": {
+            "description": "Writer, letterer, etc",
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "event_ids": {
+      "description": "IDs of overarching events the issue is part of",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "images": {
+      "description": "Array of images with their resolutions",
+      "items": {
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "resolution": {
+            "properties": {
+              "height": {
+                "min": 0,
+                "type": "number"
+              },
+              "width": {
+                "min": 0,
+                "type": "number"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "issueNumber": {
+      "description": "Issue number in series",
+      "min": 0,
+      "type": "number"
+    },
+    "onSaleDate": {
+      "format": "date",
+      "type": "string"
+    },
+    "originalPrice": {
+      "description": "Price at time of sale",
+      "min": 0,
+      "type": "number"
+    },
+    "pageCount": {
+      "description": "Number of pages in the issue",
+      "min": 1,
+      "type": "number"
+    },
+    "publisherId": {
+      "description": "Publisher ID",
+      "minLength": 1,
+      "type": "string"
+    },
+    "publisherRefId": {
+      "description": "How the publisher might reference the issue. Ideally a URI, possibly an ID",
+      "minLength": 1,
+      "type": "string"
+    },
+    "seriesId": {
+      "description": "Series ID",
+      "minLength": 1,
+      "type": "string"
+    },
+    "storyDescription": {
+      "description": "The story description",
+      "type": "string"
+    },
+    "storyIds": {
+      "description": "IDs of stories that take place in the issue or that the issue is part of",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "title": {
+      "description": "Title of issue",
+      "type": "string"
+    },
+    "variantDescription": {
+      "description": "Any additional information about the variant, eg: 'part of the alien variant series'. Note that cover artist should be included in 'creativeTeam'.",
+      "type": "string"
+    },
+    "variantNumber": {
+      "description": "Variant number; 0 is main cover",
+      "type": "integer"
+    }
+  },
+  "title": "Issue",
+  "type": "object"
+}
