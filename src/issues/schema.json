@@ -3,7 +3,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "description": "A single issue of a comicbook",
   "properties": {
-    "character_ids": {
+    "characterIds": {
       "description": "IDs of characters featured prominently in issue",
       "items": {
         "minLength": 1,
@@ -29,7 +29,7 @@
       },
       "type": "array"
     },
-    "event_ids": {
+    "eventIds": {
       "description": "IDs of overarching events the issue is part of",
       "items": {
         "minLength": 1,
