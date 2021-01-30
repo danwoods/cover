@@ -18,7 +18,7 @@
 			"description": "People who founded the publishing company",
 			"type":"array",
 			"items": {
-				"$ref": "http://cover.com/people/schema.json",
+				"$ref": "http://cover.com/person/schema.json",
 				"minLength": 0
 			},
 			"uniqueItems": true
