@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://cover.com/publisher/schema.json",
+  "title": "Publisher",
+  "description": "A publisher of comic books",
+	"type": "object",
+	"properties": {
+		"name": { 
+			"description": "Name of the publisher",
+			"type": "string"
+		},
+		"establishedDate": {
+			"description": "Date publisher was established",
+			"type": "string",
+			"format": "date"
+		},
+		"foundedBy": {
+			"description": "People who founded the publishing company",
+			"type":"array",
+			"items": {
+				"$ref": "http://cover.com/person/schema.json",
+				"minLength": 0
+			},
+			"uniqueItems": true
+		},
+		"logo": {
+			"description": "Logo for the publisher",
+			"type":"object",
+			"properties": {
+				"resolution": {
+					"type": "object",
+					"properties": {
+						"height": {
+							"min": 0,
+							"type": "number"
+						},
+						"width": {
+							"min": 0,
+							"type": "number"
+						}
+					}
+				}
+			}
+		},
+		"description": {
+			"description": "Description of the publisher",
+			"type":"string"
+		},
+		"website": {
+			"description": "Website URL for the publisher, if available",
+			"type":"string"
+		},
+		"notes": {
+			"description": "Jen & Dan's notes about the publisher",
+			"type":"string"
+		}
+	},
+	"required": ["name"]
+}
