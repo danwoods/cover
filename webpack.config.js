@@ -8,6 +8,9 @@ module.exports = {
     path: __dirname + '/dist',
     filename: 'bundle.js',
   },
+  devServer: {
+    historyApiFallback: true,
+  },
   devtool: 'source-map',
   module: {
     rules: [
@@ -48,6 +51,7 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',
+      publicPath: '/',
     }),
   ],
 }
