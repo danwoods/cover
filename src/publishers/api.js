@@ -88,6 +88,14 @@ const create = (newPublisher) => {
 }
 
 /**
+ * Remove publisher from database
+ * @param {string} id - Publisher ID
+ * @param {string} rev - Doc rev
+ * @return {Promise} - Result of putting with `deleted: true`
+ */
+const remove = (id, rev) => db.put({ _id: id, _rev: rev, _deleted: true })
+
+/**
  * @typedef {object} UsePublisherObject
  * @property {object[]} publishers - Live updating array of publishers
  * @property {function} create - Function to create new publishers; ({name}) => Promise
@@ -100,11 +108,13 @@ const create = (newPublisher) => {
 export const usePublishers = () => {
   const [publishers, setPublishers] = useState([])
 
-  useEffect(() => {
-    db.query('publishers/all', { include_docs: true }).then((result) =>
-      setPublishers(result.rows.map((row) => row.doc))
-    )
+  const resetPublishers = () =>
+    db
+      .query('publishers/all', { include_docs: true })
+      .then((result) => setPublishers(result.rows.map((row) => row.doc)))
 
+  useEffect(() => {
+    resetPublishers()
     // This feels like it should happen once, not every time someone calls `usePublisher`
     const disconnect = db
       .changes({
@@ -119,15 +129,11 @@ export const usePublishers = () => {
         // handle change
         if (change.deleted === true) {
           setPublishers((publishers) =>
-            removeFromArray(publishers, change.doc.id)
+            removeFromArray(publishers, change.doc._id)
           )
         } else {
           setPublishers((publishers) => updateInArray(publishers, change.doc))
         }
-      })
-      .on('complete', function (info) {
-        // changes() was canceled
-        console.log({ complete: info })
       })
       .on('error', function (err) {
         console.error(err)
@@ -139,5 +145,18 @@ export const usePublishers = () => {
   return {
     create,
     publishers,
+    remove: (id) => {
+      const existingPub = publishers.find((pub) => pub._id === id)
+
+      if (existingPub) {
+        return (
+          remove(existingPub._id, existingPub._rev)
+            // Not sure why the changes feed isn't picking up local deletions
+            .then(resetPublishers)
+        )
+      } else {
+        return Promise.reject('NO_MATCHING_PUBLISHER_FOUND')
+      }
+    },
   }
 }

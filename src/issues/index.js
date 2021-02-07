@@ -49,36 +49,36 @@ export const Issues = () => {
 
   return (
     <Router>
-      <Route path="/">
+      <Route path={['/', '/issues']} exact>
         <div>{`Number of issues: ${issues.length}`}</div>
-        {issues && issues.length > 0 ? <List items={issues} /> : null}
+        <List items={issues} />
+        <input
+          type={'text'}
+          value={newIssueId}
+          onChange={(evt) => setNewIssueId(evt.target.value)}
+        />
+        <button onClick={createNewIssue}>{'Add New'}</button>
+
+        <Snackbar
+          open={hasError}
+          autoHideDuration={6000}
+          onClose={resetAddIssueForm}
+        >
+          <MuiAlert onClose={resetAddIssueForm} severity="error">
+            {`Issue ${newIssueId} not found!`}
+          </MuiAlert>
+        </Snackbar>
+
+        <Snackbar
+          open={hasSuccess}
+          autoHideDuration={6000}
+          onClose={() => setHasSuccess(false)}
+        >
+          <MuiAlert onClose={() => setHasSuccess(false)} severity="success">
+            {newIssue !== null ? `${newIssue.title} added!` : 'Issue added!'}
+          </MuiAlert>
+        </Snackbar>
       </Route>
-      <input
-        type={'text'}
-        value={newIssueId}
-        onChange={(evt) => setNewIssueId(evt.target.value)}
-      />
-      <button onClick={createNewIssue}>{'Add New'}</button>
-
-      <Snackbar
-        open={hasError}
-        autoHideDuration={6000}
-        onClose={resetAddIssueForm}
-      >
-        <MuiAlert onClose={resetAddIssueForm} severity="error">
-          {`Issue ${newIssueId} not found!`}
-        </MuiAlert>
-      </Snackbar>
-
-      <Snackbar
-        open={hasSuccess}
-        autoHideDuration={6000}
-        onClose={() => setHasSuccess(false)}
-      >
-        <MuiAlert onClose={() => setHasSuccess(false)} severity="success">
-          {newIssue !== null ? `${newIssue.title} added!` : 'Issue added!'}
-        </MuiAlert>
-      </Snackbar>
     </Router>
   )
 }
